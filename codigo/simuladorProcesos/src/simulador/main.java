@@ -5,6 +5,8 @@
  */
 package simulador;
 
+import java.util.Random;
+
 /**
  *
  * @author litosoler
@@ -15,7 +17,13 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Random aleatorio = new Random();
+  
+        for (int i = 0; i < 10; i++) {
+            Proceso proceso = new Proceso();
+            System.out.println(proceso+";");
+            
+        }
     }
     
 }
