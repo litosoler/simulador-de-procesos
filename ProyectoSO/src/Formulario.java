@@ -204,11 +204,13 @@ public class Formulario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //BOTON QUE SIMULA ALEATORIAMENTE
     private void btnSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulacionActionPerformed
         Integer CantidadCiclos=Integer.parseInt(txtcantidad.getText());
         ejecucion(CantidadCiclos);
     }//GEN-LAST:event_btnSimulacionActionPerformed
 
+    //BOTON PARA GUARDAR
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
        exportar();
     }//GEN-LAST:event_btnGuardarActionPerformed
