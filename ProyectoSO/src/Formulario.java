@@ -317,24 +317,7 @@ public class Formulario extends javax.swing.JFrame {
         }
 
         //Comienzo de la estructura de iteración      
-        for (int ciclos = 0; ciclos < cantidadCiclos; ciclos++) {
-
-            //Cambiando a listos todos los 10 procesos de más alta prioridad correctamente validados
-            for (int i = 0; i < 10; i++) {
-                if (colaNuevos.isEmpty()) { //Si no existen 10 procesos nuevos, solo toma los que existan
-                    break;
-                }
-                //Verifica si el proceso es válido
-                if (colaNuevos.element().getValidez()) {
-                    //Cambia el estado del proceso a listo
-                    colaNuevos.element().setEstado(1);
-                    //Mueve el proceso a la cola de listos
-                    colaListos.add(colaNuevos.remove());
-                } else {
-                    //Si el proceso no es válido lo desecha de la cola.
-                    colaNuevos.remove();
-                }
-            }
+        for (int ciclos = 0; ciclos < cantidadCiclos; ciclos++) {           
             //En caso de haber procesos nuevos se verica la cantidad de procesos en las lista listos, bloqueados, ejecutando 
             //si la cant es menor de 10 se agrega un nuevo procesos a la lista de listos hasta que se alcancen los 10
             while (!colaNuevos.isEmpty()) {
