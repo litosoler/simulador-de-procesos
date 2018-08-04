@@ -204,6 +204,7 @@ public class Formulario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //BOTON QUE SIMULA ALEATORIAMENTE
     private void btnSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulacionActionPerformed
        //Verificando si el usuario ingresó los ciclos
         if (!verificarCantCiclos()) {
@@ -225,6 +226,7 @@ public class Formulario extends javax.swing.JFrame {
         ejecucion();
     }//GEN-LAST:event_btnSimulacionActionPerformed
 
+    //BOTON PARA GUARDAR
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         exportar();
     }//GEN-LAST:event_btnGuardarActionPerformed
