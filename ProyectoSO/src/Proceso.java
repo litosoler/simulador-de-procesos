@@ -53,8 +53,8 @@ public class Proceso implements Comparable<Proceso>{//Implementa Comparable para
         }else if(idProcesos.contains(id)){
             mensaje = "Proceso no válido: El id ya existe";
             validez = false;
-        }else if(estado!=0){
-            mensaje = "Proceso no válido: Todos los procesos deben comenzar en el estado Nuevo.";
+        }else if(estado<0 || estado>4){
+            mensaje = "Proceso no válido: Estado de proceso no reconocido.";
             validez = false;
         }else if(prioridad<1 || prioridad>3){
             mensaje = "Proceso no válido:Valor de prioridad incorrecto";
