@@ -6,22 +6,28 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.PriorityQueue;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 /**
  *
- * @author orjod
+ * @author Lito Soler
+ *          Kelly Aguilar
+ *          María Ramírez
+ *          Orlando Durán
+ *          Mario Gómez
  */
 public class Formulario extends javax.swing.JFrame {
     //Colas de prioridad (5 TDA's) para los 5 estados del Modelo
-    static PriorityQueue<simulador.Proceso> colaNuevos = new PriorityQueue<>();//Nuevos
-    static PriorityQueue<simulador.Proceso> colaEjecutando= new PriorityQueue<>();//Ejecutando
-    static PriorityQueue<simulador.Proceso> colaListos = new PriorityQueue<>();//Listos
-    static PriorityQueue<simulador.Proceso> colaBloqueados = new PriorityQueue<>();//Bloqueados
-    static PriorityQueue<simulador.Proceso> colaTerminados = new PriorityQueue<>();//Terminados
-    static PriorityQueue<simulador.Proceso> colaImpresion = new PriorityQueue<>();//Cola utilizada para clonar otra de las colas principales y así evitar perder el contenido de estas.
+    static PriorityQueue<Proceso> colaNuevos = new PriorityQueue<>();//Nuevos
+    static PriorityQueue<Proceso> colaEjecutando= new PriorityQueue<>();//Ejecutando
+    static PriorityQueue<Proceso> colaListos = new PriorityQueue<>();//Listos
+    static PriorityQueue<Proceso> colaBloqueados = new PriorityQueue<>();//Bloqueados
+    static PriorityQueue<Proceso> colaTerminados = new PriorityQueue<>();//Terminados
+    static PriorityQueue<Proceso> colaImpresion = new PriorityQueue<>();//Cola utilizada para clonar otra de las colas principales y así evitar perder el contenido de estas.
     
     
     
@@ -59,6 +65,11 @@ public class Formulario extends javax.swing.JFrame {
         btnnueva = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnRestaurar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,13 +106,38 @@ public class Formulario extends javax.swing.JFrame {
         btnnueva.setText("Nueva Simulacion\n\n");
 
         btnGuardar.setText("Guardar Simulacion");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnRestaurar.setText("Restaurar Simulacion");
+
+        jLabel1.setText("NUEVOS PROCESOS");
+
+        jLabel2.setText("PROCESOS LISTOS");
+
+        jLabel3.setText("PROCESOS EJECUTANDO");
+
+        jLabel4.setText("PROCESOS BLOQUEADOS");
+
+        jLabel5.setText("PROCESOS FINALIZADOS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(btnSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(161, 161, 161))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,26 +147,29 @@ public class Formulario extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel1)
+                                        .addGap(58, 58, 58)
+                                        .addComponent(jLabel2)))
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(btnSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(161, 161, 161))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,14 +178,21 @@ public class Formulario extends javax.swing.JFrame {
                 .addComponent(lblCantidad)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5)
                     .addComponent(jScrollPane4)
                     .addComponent(jScrollPane3)
                     .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2))
-                .addGap(30, 30, 30)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
                     .addComponent(btnRestaurar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -159,12 +205,204 @@ public class Formulario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulacionActionPerformed
-        
+        Integer CantidadCiclos=Integer.parseInt(txtcantidad.getText());
+        ejecucion(CantidadCiclos);
     }//GEN-LAST:event_btnSimulacionActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+       exportar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void exportar (){//procedimiento para guardar en un archivo de texto
+        try{
+            JFileChooser archivo= new JFileChooser(System.getProperty("user.dir"));
+            archivo.showSaveDialog(this);
+            if (archivo.getSelectedFile() != null) {
+        try (FileWriter guardado = new FileWriter(archivo.getSelectedFile())) {
+            guardado.write(txtcola0.getText()+txtcola1.getText()+txtcola2.getText()+txtcola3.getText()+txtcola4.getText());//guarda todas las colas en el archivo de texto
+            JOptionPane.showMessageDialog(rootPane, "El archivo fue guardado con éxito en la ruta establecida");
+                }
+            }
+           } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+    }
+    
+    public static void ejecucion(Integer cantidadCiclo){
+        Integer cantidadCiclos = cantidadCiclo; //Aquí se debe almacenar la cantidad de ciclos que el usuario ingresa 
+                         
+        //Generando procesos nuevos aleatorios  SE DEBEN SUSTITURI POR LA LECTURA DESDE ARCHIVO
+        System.out.println("-------------------PROCESOS A SIMULAR-----------------");
+        for (int i = 0; i < 20; i++) {
+            Proceso proceso = new Proceso(); 
+            proceso.crearAleatorioBCP(); 
+            proceso.validarProceso();
+            colaNuevos.add(proceso);
+             System.out.println(proceso+"      "+proceso.getMensaje());
+        } 
+        System.out.println("-------------------------------------------------------");
+        
+        
+        //Verificando si hay nuevos procesos 
+        if(colaNuevos.isEmpty()){
+            System.out.println("No existen procesos nuevos");
+            return;
+        }
+        
+        //Cambiando a listos todos los 10 procesos de más alta prioridad correctamente validados
+        for(int i =0;i<10;i++){
+            if(colaNuevos.isEmpty()){ //Si no existen 10 procesos nuevos, solo toma los que existan
+                break;
+            }
+            //Verifica si el proceso es válido
+            if(colaNuevos.element().getValidez()){
+                //Cambia el estado del proceso a listo
+                colaNuevos.element().setEstado(1);
+                //Mueve el proceso a la cola de listos
+                colaListos.add(colaNuevos.remove());
+            }else{
+                //Si el proceso no es válido lo desecha de la cola.
+                colaNuevos.remove();
+            }            
+        }
+        
+        
+        //Comienzo de la estructura de iteración      
+        for(int ciclos = 0; ciclos<cantidadCiclos; ciclos++){
+            //En caso de haber procesos nuevos se verica la cantidad de procesos en las lista listos, bloqueados, ejecutando 
+            //si la cant es menor de 10 se agrega un nuevo procesos a la lista de listos hasta que se alcancen los 10
+            while(!colaNuevos.isEmpty()){
+                if((colaListos.size()+colaEjecutando.size()+colaBloqueados.size())<10){
+                    colaNuevos.element().setEstado(1);
+                    colaListos.add(colaNuevos.remove());
+                }else{
+                    break;
+                }
+            }
+            
+            //Verificando si hay procesos en la cola de listos. Si la cola ejecutando está vacía, encola un proceso listo para ejecutarse.
+            if(!colaListos.isEmpty()){
+                if(colaEjecutando.isEmpty()){
+                    colaListos.element().setEstado(2);
+                    colaEjecutando.add(colaListos.remove());
+                }
+            }
+            
+            //Ejecución de procesos
+            if(!colaEjecutando.isEmpty()){
+                //Verificando si la cantidad de instrucciones ejecutadas es distinta a la cantidad de instrucciones del proceso
+                if(colaEjecutando.element().getCantInstEjecutadas() != colaEjecutando.element().getCatidadInstruc()){
+                    colaEjecutando.element().AumCantInstEjecutadas();
+                    colaEjecutando.element().aumentarCiclosEjecu();//Se lleva un conteo de cuántos ciclos seguidos se ha ejecutado el proceso.
+                    //Verificando si NO se ha llegado a la instrucción de bloqueo
+                    if(colaEjecutando.element().getIntrucBloqueo() != colaEjecutando.element().getCantInstEjecutadas()){
+                        //Verificando si el proceso se ejecutó durante 3 segmentos seguidos 
+                        if(colaEjecutando.element().getCiclosEjecutando()==3){
+                            //Si se ha ejecutado el proceso durante 3 segmentos seguidos, se comprueba que su prioridad pueda ser degradada
+                            if(colaEjecutando.element().getPrioridad()<3){
+                                colaEjecutando.element().setPrioridad(colaEjecutando.element().getPrioridad()+1);
+                            }
+                            //Se procede a mover el proceso a la cola de listos
+                            colaEjecutando.element().setEstado(1);
+                            colaEjecutando.element().limpiarCiclosEjecu();
+                            colaListos.add(colaEjecutando.remove());
+                        }
+                    }else{//Si la instrucción de bloqueo es igual a la cantidad de instrucciones ejecutadas, se procede a bloquear el proceso
+                        colaEjecutando.element().setEstado(3);
+                        colaEjecutando.element().limpiarCiclosEjecu();
+                        colaBloqueados.add(colaEjecutando.remove());
+                    }
+                }else{//Si la cantidad de instrucciones ejecutas es igual a la cantidad de instrucciones del proceso, este se da por terminado 
+                    colaEjecutando.element().setEstado(4);
+                    colaTerminados.add(colaEjecutando.remove());
+                }
+            }
+            
+            //Verifica que existan procesos bloqueados
+            if(!colaBloqueados.isEmpty()){
+                //Copiar la cola de bloqueados en la cola de impresion para poder manipularla
+                colaImpresion.addAll(colaBloqueados);
+                //Vaciar la cola de bloqueados para poder insertar nuevamente los procesos modificados
+                colaBloqueados.clear();
+                //Mientras la cola de impresión tenga elementos se aumentará la cantidad de instrucciones ejecutadas de los procesos  
+                while(!colaImpresion.isEmpty()){
+                    //Verifica si la cantidad de instrucciones ejecutadas es distinta la instruccion de bloqueo + la cantidad de instrucciones en la que debe permanecer bloqueado el proceso
+                    if(colaImpresion.element().getCantInstEjecutadas() != (colaImpresion.element().getIntrucBloqueo()+colaImpresion.element().getCiclosBloqueo())){
+                        //Aumentar la cantidad de instrucciones ejecutadas y retornar el proceso a la cola de bloqueados
+                        colaImpresion.element().AumCantInstEjecutadas();
+                        colaBloqueados.add(colaImpresion.remove());
+                    }else{//Si se han ejecutado las instrucciones del evento de bloque, se procede a encolar el proceso a Listos.
+                        colaImpresion.element().setEstado(1);
+                        colaListos.add(colaImpresion.remove());
+                    }
+                    
+                }
+            } 
+        }
+        //Imprimir en consola el estado final de las colas
+        imprimirColas();
+    }
+    public  static void imprimirColas(){
+        //Imprimiendo la cola de nuevos
+        System.out.println("");
+        System.out.println("PROCESOS NUEVOS");
+        colaImpresion.addAll(colaNuevos);        
+        while (!colaImpresion.isEmpty()) {
+            Proceso proceso = colaImpresion.remove();//procesos nuevos
+            System.out.println(proceso);
+           // Formulario x = new Formulario();
+            //x.mostrar(String.valueOf(proceso));
+            //txtcola0.setText(String.valueOf(proceso)+"\n");
+            txtcola0.append(String.valueOf(proceso)+"\n");
+        }
+        
+        //Imprimiendo la cola de listos
+        System.out.println("");
+        System.out.println("PROCESOS LISTOS");
+        colaImpresion.addAll(colaListos);        
+        while (!colaImpresion.isEmpty()) {
+            Proceso proceso = colaImpresion.remove();
+            System.out.println(proceso);
+            txtcola1.append(String.valueOf(proceso)+"\n");
+        }
+        
+        //Imprimiendo la cola de ejecutando
+        System.out.println("");
+        System.out.println("PROCESOS EJECUTANDO");
+        colaImpresion.addAll(colaEjecutando);        
+        while (!colaImpresion.isEmpty()) {
+            Proceso proceso = colaImpresion.remove();
+            System.out.println(proceso);
+            txtcola2.append(String.valueOf(proceso)+"\n");
+        }
+        
+        //Imprimiendo la cola de bloqueados
+        System.out.println("");
+        System.out.println("PROCESOS BLOQUEADOS");
+        colaImpresion.addAll(colaBloqueados);        
+        while (!colaImpresion.isEmpty()) {
+            Proceso proceso = colaImpresion.remove();
+            System.out.println(proceso);
+            txtcola3.append(String.valueOf(proceso)+"\n");
+        }
+        
+        //Imprimiendo la cola de terminados
+        System.out.println("");
+        System.out.println("PROCESOS TERMINADOS");
+        colaImpresion.addAll(colaTerminados);        
+        while (!colaImpresion.isEmpty()) {
+            Proceso proceso = colaImpresion.remove();
+            System.out.println(proceso);
+            txtcola4.append(String.valueOf(proceso)+"\n");
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -172,7 +410,7 @@ public class Formulario extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
        
-
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -181,11 +419,17 @@ public class Formulario extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnRestaurar;
     private javax.swing.JButton btnSimulacion;
     private javax.swing.JButton btnnueva;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -193,10 +437,12 @@ public class Formulario extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JTextField txtcantidad;
-    private javax.swing.JTextArea txtcola0;
-    private javax.swing.JTextArea txtcola1;
-    private javax.swing.JTextArea txtcola2;
-    private javax.swing.JTextArea txtcola3;
-    private javax.swing.JTextArea txtcola4;
+    private static javax.swing.JTextArea txtcola0;
+    private static javax.swing.JTextArea txtcola1;
+    private static javax.swing.JTextArea txtcola2;
+    private static javax.swing.JTextArea txtcola3;
+    private static javax.swing.JTextArea txtcola4;
     // End of variables declaration//GEN-END:variables
+
+    
 }
