@@ -30,7 +30,9 @@
               <Component id="btnnueva" min="-2" pref="151" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Component id="btnGuardar" min="-2" pref="166" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="334" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="verOrdenEjecucion" min="-2" pref="166" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -102,7 +104,10 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnGuardar" alignment="0" pref="68" max="32767" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="btnGuardar" alignment="3" pref="68" max="32767" attributes="0"/>
+                      <Component id="verOrdenEjecucion" alignment="3" pref="68" max="32767" attributes="0"/>
+                  </Group>
                   <Component id="btnSimulacion" max="32767" attributes="0"/>
                   <Component id="btnnueva" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -218,6 +223,7 @@
         <Property name="name" type="java.lang.String" value="btnSimulacionAlea" noResource="true"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSimulacionMouseClicked"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimulacionActionPerformed"/>
       </Events>
     </Component>
@@ -263,6 +269,15 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="PROCESOS FINALIZADOS"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="verOrdenEjecucion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver Orden de Ejecuci&#xf3;n"/>
+        <Property name="name" type="java.lang.String" value="btnGuardarSimulacion" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verOrdenEjecucionActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

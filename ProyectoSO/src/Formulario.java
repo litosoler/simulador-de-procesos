@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.PriorityQueue;
@@ -67,6 +70,7 @@ public class Formulario extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        verOrdenEjecucion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,6 +99,11 @@ public class Formulario extends javax.swing.JFrame {
 
         btnSimulacion.setText("Simulacion Aleatoria");
         btnSimulacion.setName("btnSimulacionAlea"); // NOI18N
+        btnSimulacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSimulacionMouseClicked(evt);
+            }
+        });
         btnSimulacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSimulacionActionPerformed(evt);
@@ -127,6 +136,14 @@ public class Formulario extends javax.swing.JFrame {
 
         jLabel5.setText("PROCESOS FINALIZADOS");
 
+        verOrdenEjecucion.setText("Ver Orden de Ejecución");
+        verOrdenEjecucion.setName("btnGuardarSimulacion"); // NOI18N
+        verOrdenEjecucion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verOrdenEjecucionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -138,7 +155,9 @@ public class Formulario extends javax.swing.JFrame {
                 .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(334, 334, 334))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(verOrdenEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(158, 158, 158))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +214,9 @@ public class Formulario extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                        .addComponent(verOrdenEjecucion, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
                     .addComponent(btnSimulacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnnueva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -213,16 +234,16 @@ public class Formulario extends javax.swing.JFrame {
         //Limpiando colas
         limpiarColas();
         //Generando procesos nuevos aleatorios 
-        System.out.println("-------------------PROCESOS A SIMULAR-----------------");
+//        System.out.println("-------------------PROCESOS A SIMULAR-----------------");
         for (int i = 0; i < 20; i++) {
             Proceso proceso = new Proceso();
             proceso.crearAleatorioBCP();
             proceso.validarProceso();
             colaNuevos.add(proceso);
-            System.out.println(proceso + "      " + proceso.getMensaje());
+//            System.out.println(proceso + "      " + proceso.getMensaje());
         }
         Proceso.ultimoId=0;
-        System.out.println("-------------------------------------------------------");        
+//        System.out.println("-------------------------------------------------------");        
         ejecucion();
     }//GEN-LAST:event_btnSimulacionActionPerformed
 
@@ -232,63 +253,122 @@ public class Formulario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnnuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnuevaActionPerformed
-        //Verificando si el usuario ingresó los ciclos
-        if (!verificarCantCiclos()) {
-            return;
-        }
-        //Limpiando colas
-        limpiarColas();  //Este código solo debe ejecutarse una vez, para limpiar las colas antes de leer el archivo
-        
-        
-        //Variables para crear el BCP
-        int id=0;
-        int estadoProceso=0;
-        int prioridad=0;
-        int canInst=0;
-        int instBloqueo=0;
-        int evento=0;        
-        //Creando proceso a partir de los valores leídos desde el archivo
-        Proceso proceso = new Proceso();
-        proceso.crearBCP(id,estadoProceso, prioridad,canInst,instBloqueo,evento);  
-        proceso.validarProceso();
-        System.out.println(proceso.getMensaje());
-        //Verificando si el proceso es válido, si no es válido es desechado
-        if(proceso.getValidez()){
-            //Verificando en qué estado se encuentra el proceso
-            switch(estadoProceso){
-                //Añadiendo a nuevos
-                case 0:
-                    colaNuevos.add(proceso);
-                    break;  
-                //Añadiendo a listos
-                case 1:
-                    colaListos.add(proceso);
-                    break;
-                //Añadiendo a Ejecutando
-                case 2:
-                    colaEjecutando.add(proceso);
-                    break;   
-                //Añadiendo a Bloqueados
-                case 3:
-                    colaBloqueados.add(proceso);
-                    break;
-                //Añadiendo a terminados
-                case 4:
-                    colaTerminados.add(proceso);
-                    break;
+        try {
+            PriorityQueue<Proceso> todosProcesos;
+            //Verificando si el usuario ingresó los ciclos
+            if (!verificarCantCiclos()) {
+                return;
             }
-        }        
+            
+            //Limpiando colas
+            limpiarColas();  //Este código solo debe ejecutarse una vez, para limpiar las colas antes de leer el archivo
+            
+            todosProcesos = obtenerProcesos("./procesos.txt");
+            
+            while(! todosProcesos.isEmpty()){
+                Proceso proceso = todosProcesos.remove();
+                //Verificando si el proceso es válido, si no es válido es desechado
+                if(proceso.getValidez()){
+                    //Verificando en qué estado se encuentra el proceso
+                    switch(proceso.getEstado()){
+                        //Añadiendo a nuevos
+                        case 0:
+                            colaNuevos.add(proceso);
+                            break;
+                            //Añadiendo a listos
+                        case 1:
+                            colaListos.add(proceso);
+                            break;
+                            //Añadiendo a Ejecutando
+                        case 2:
+                            colaEjecutando.add(proceso);
+                            break;
+                            //Añadiendo a Bloqueados
+                        case 3:
+                            colaBloqueados.add(proceso);
+                            break;
+                            //Añadiendo a terminados
+                        case 4:
+                            colaTerminados.add(proceso);
+                            break;
+                    }
+                }
+            }
+            imprimirColas();
+        } catch (IOException ex) {        
+            Logger.getLogger(Formulario.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_btnnuevaActionPerformed
 
+    private void btnSimulacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimulacionMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSimulacionMouseClicked
+
+    private void verOrdenEjecucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verOrdenEjecucionActionPerformed
+        OrdenEjecucion ventana= new OrdenEjecucion();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_verOrdenEjecucionActionPerformed
+
     private void exportar() {//procedimiento para guardar en un archivo de texto
         try {
-            JFileChooser archivo = new JFileChooser(System.getProperty("user.dir"));
-            archivo.showSaveDialog(this);
-            if (archivo.getSelectedFile() != null) {
-                try (FileWriter guardado = new FileWriter(archivo.getSelectedFile())) {
+//            JFileChooser archivo = new JFileChooser(System.getProperty("user.dir"));
+//            archivo.showSaveDialog(this);
+            String ruta = "./procesos.txt";
+            File archivo = new File(ruta);
+            if (archivo.exists()) {
+                try (FileWriter guardado = new FileWriter(archivo)) {
                     guardado.write(txtcola0.getText() + txtcola1.getText() + txtcola2.getText() + txtcola3.getText() + txtcola4.getText());//guarda todas las colas en el archivo de texto
-                    JOptionPane.showMessageDialog(rootPane, "El archivo fue guardado con éxito en la ruta establecida");
+                    JOptionPane.showMessageDialog(rootPane, "El archivo fue guardado con éxito");
+                }
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+    
+   private PriorityQueue<Proceso> obtenerProcesos(String archivo) throws FileNotFoundException, IOException {
+      String cadena;
+      String acumulador = "";
+      FileReader f = new FileReader(archivo);
+      BufferedReader b = new BufferedReader(f);
+      while((cadena = b.readLine())!=null) {
+          acumulador += cadena;
+      }
+      b.close();
+      return crearProcesos(acumulador);
+    }   
+    
+    public PriorityQueue<Proceso> crearProcesos(String cadena) {
+        PriorityQueue<Proceso> todosProcesos = new PriorityQueue<>();
+        String[] procesos = cadena.split(";");
+        for(int i = 0; i <procesos.length; i++){
+            String proceso = procesos[i];
+            String[] partesProceso = proceso.split("/");
+            int id = Integer.parseInt(partesProceso[0]);
+            int estado = Integer.parseInt(partesProceso[1]);
+            int prioridad = Integer.parseInt(partesProceso[2]);
+            int cantidadInstruc = Integer.parseInt(partesProceso[3]);
+            int intrucBloqueo = Integer.parseInt(partesProceso[4]);
+            int evento = Integer.parseInt(partesProceso[5]);
+            
+            Proceso procesoCreado = new Proceso();
+            procesoCreado.crearBCP(id,estado, prioridad,cantidadInstruc,intrucBloqueo,evento);  
+            procesoCreado.validarProceso();
+            todosProcesos.add(procesoCreado);  
+        }
+        return todosProcesos;
+    }
+    
+    private void guardarOrdenEjecucionProcesos(String traza){
+       try {
+            String ruta = "./ordenEjecucion.txt";
+            File archivo = new File(ruta);
+           
+            if (archivo.exists()) {
+                try (FileWriter guardado = new FileWriter(archivo)) {
+                    guardado.write(traza);
+                    JOptionPane.showMessageDialog(rootPane, "El orden de ejecucion fue guardado con exito");
                 }
             }
         } catch (IOException ex) {
@@ -309,7 +389,7 @@ public class Formulario extends javax.swing.JFrame {
 
     public void ejecucion() {
         Integer cantidadCiclos = Integer.parseInt(txtcantidad.getText()); //Aquí se debe almacenar la cantidad de ciclos que el usuario ingresa 
-
+        String traza = "";
         //Verificando si hay nuevos procesos 
         if (colaNuevos.isEmpty()) {
             System.out.println("No existen procesos nuevos");
@@ -321,12 +401,16 @@ public class Formulario extends javax.swing.JFrame {
             //En caso de haber procesos nuevos se verica la cantidad de procesos en las lista listos, bloqueados, ejecutando 
             //si la cant es menor de 10 se agrega un nuevo procesos a la lista de listos hasta que se alcancen los 10
             while (!colaNuevos.isEmpty()) {
+               
                 if ((colaListos.size() + colaEjecutando.size() + colaBloqueados.size()) < 10) {
                     colaNuevos.element().setEstado(1);
-                    colaListos.add(colaNuevos.remove());
+                    Proceso proceso = colaNuevos.remove();
+                    colaListos.add(proceso);
                 } else {
                     break;
                 }
+                
+                
             }
 
             //Verificando si hay procesos en la cola de listos. Si la cola ejecutando está vacía, encola un proceso listo para ejecutarse.
@@ -342,6 +426,7 @@ public class Formulario extends javax.swing.JFrame {
                 //Verificando si la cantidad de instrucciones ejecutadas es distinta a la cantidad de instrucciones del proceso
                 if (colaEjecutando.element().getCantInstEjecutadas() != colaEjecutando.element().getCatidadInstruc()) {
                     colaEjecutando.element().AumCantInstEjecutadas();
+                    traza = traza +  colaEjecutando.element().toString() + "\n";
                     colaEjecutando.element().aumentarCiclosEjecu();//Se lleva un conteo de cuántos ciclos seguidos se ha ejecutado el proceso.
                     //Verificando si NO se ha llegado a la instrucción de bloqueo
                     if (colaEjecutando.element().getIntrucBloqueo() != colaEjecutando.element().getCantInstEjecutadas()) {
@@ -386,8 +471,10 @@ public class Formulario extends javax.swing.JFrame {
                     }
                 }
             }
+          
         }
         imprimirColas();
+        guardarOrdenEjecucionProcesos(traza);
     }
 
     public void limpiarColas() {
@@ -408,56 +495,56 @@ public class Formulario extends javax.swing.JFrame {
 
     public void imprimirColas() {
         //Imprimiendo la cola de nuevos
-        System.out.println("");
-        System.out.println("PROCESOS NUEVOS");
+//        System.out.println("");
+//        System.out.println("PROCESOS NUEVOS");
         colaImpresion.addAll(colaNuevos);
         while (!colaImpresion.isEmpty()) {
             Proceso proceso = colaImpresion.remove();//procesos nuevos
-            System.out.println(proceso);
+//            System.out.println(proceso);
             //Imprime en el textBox correspondiente todos los procesos nuevos
             txtcola0.append(String.valueOf(proceso) + "\n");
         }
 
         //Imprimiendo la cola de listos
-        System.out.println("");
-        System.out.println("PROCESOS LISTOS");
+//        System.out.println("");
+//        System.out.println("PROCESOS LISTOS");
         colaImpresion.addAll(colaListos);
         while (!colaImpresion.isEmpty()) {
             Proceso proceso = colaImpresion.remove();
-            System.out.println(proceso);
+//            System.out.println(proceso);
             //Imprime en el textBox correspondiente todos los procesos listos
             txtcola1.append(String.valueOf(proceso) + "\n");
         }
 
         //Imprimiendo la cola de ejecutando
-        System.out.println("");
-        System.out.println("PROCESOS EJECUTANDO");
+//        System.out.println("");
+//        System.out.println("PROCESOS EJECUTANDO");
         colaImpresion.addAll(colaEjecutando);
         while (!colaImpresion.isEmpty()) {
             Proceso proceso = colaImpresion.remove();
-            System.out.println(proceso);
+//            System.out.println(proceso);
             //Imprime en el textBox correspondiente todos los procesos ejecutando
             txtcola2.append(String.valueOf(proceso) + "\n");
         }
 
         //Imprimiendo la cola de bloqueados
-        System.out.println("");
-        System.out.println("PROCESOS BLOQUEADOS");
+//        System.out.println("");
+//        System.out.println("PROCESOS BLOQUEADOS");
         colaImpresion.addAll(colaBloqueados);
         while (!colaImpresion.isEmpty()) {
             Proceso proceso = colaImpresion.remove();
-            System.out.println(proceso);
+//            System.out.println(proceso);
             //Imprime en el textBox correspondiente todos los procesos bloqueados
             txtcola3.append(String.valueOf(proceso) + "\n");
         }
 
         //Imprimiendo la cola de terminados
-        System.out.println("");
-        System.out.println("PROCESOS TERMINADOS");
+//        System.out.println("");
+//        System.out.println("PROCESOS TERMINADOS");
         colaImpresion.addAll(colaTerminados);
         while (!colaImpresion.isEmpty()) {
             Proceso proceso = colaImpresion.remove();
-            System.out.println(proceso);
+//            System.out.println(proceso);
             //Imprime en el textBox correspondiente todos los procesos terminados
             txtcola4.append(String.valueOf(proceso) + "\n");
         }
@@ -501,6 +588,7 @@ public class Formulario extends javax.swing.JFrame {
     private static javax.swing.JTextArea txtcola2;
     private static javax.swing.JTextArea txtcola3;
     private static javax.swing.JTextArea txtcola4;
+    private javax.swing.JButton verOrdenEjecucion;
     // End of variables declaration//GEN-END:variables
 
 }
