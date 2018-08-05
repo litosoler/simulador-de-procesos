@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.PriorityQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  *
@@ -66,6 +66,7 @@ public class Formulario extends javax.swing.JFrame {
         txtHistorialEjecucion = new javax.swing.JTextArea();
         lblHistorial = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        btnEjecutar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simulador de Procesos");
@@ -112,10 +113,11 @@ public class Formulario extends javax.swing.JFrame {
         txtcola4.setRows(5);
         jScrollPane5.setViewportView(txtcola4);
 
-        btnSimulacion.setBackground(new java.awt.Color(0, 153, 255));
+        btnSimulacion.setBackground(new java.awt.Color(0, 153, 204));
         btnSimulacion.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnSimulacion.setForeground(new java.awt.Color(255, 255, 255));
-        btnSimulacion.setText("Simulación Aleatoria");
+        btnSimulacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/random.png"))); // NOI18N
+        btnSimulacion.setToolTipText("Crear procesos Aleatorios");
         btnSimulacion.setBorder(null);
         btnSimulacion.setName("btnSimulacionAlea"); // NOI18N
         btnSimulacion.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -132,7 +134,9 @@ public class Formulario extends javax.swing.JFrame {
         btnnueva.setBackground(new java.awt.Color(0, 153, 255));
         btnnueva.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnnueva.setForeground(new java.awt.Color(255, 255, 255));
-        btnnueva.setText("Cargar Simulación  ");
+        btnnueva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open.png"))); // NOI18N
+        btnnueva.setToolTipText("Cargar procesos");
+        btnnueva.setActionCommand("");
         btnnueva.setBorder(null);
         btnnueva.setName("btnCargarSimulacion"); // NOI18N
         btnnueva.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +148,8 @@ public class Formulario extends javax.swing.JFrame {
         btnGuardar.setBackground(new java.awt.Color(102, 204, 255));
         btnGuardar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardar.setText("Guardar Simulación");
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save.png"))); // NOI18N
+        btnGuardar.setToolTipText("Guardar estado de Procesos");
         btnGuardar.setBorder(null);
         btnGuardar.setName("btnGuardarSimulacion"); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -164,6 +169,18 @@ public class Formulario extends javax.swing.JFrame {
         lblHistorial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/estados.png"))); // NOI18N
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/historial.png"))); // NOI18N
+
+        btnEjecutar.setBackground(new java.awt.Color(153, 204, 255));
+        btnEjecutar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEjecutar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/run.png"))); // NOI18N
+        btnEjecutar.setToolTipText("Comenzar Simulación");
+        btnEjecutar.setBorder(null);
+        btnEjecutar.setEnabled(false);
+        btnEjecutar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEjecutarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,15 +206,17 @@ public class Formulario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblHistorial)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 8, Short.MAX_VALUE)))
+                        .addComponent(lblHistorial)
+                        .addGap(0, 8, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -209,10 +228,11 @@ public class Formulario extends javax.swing.JFrame {
                         .addComponent(lblCantidad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 12, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblHistorial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -222,12 +242,13 @@ public class Formulario extends javax.swing.JFrame {
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 16, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSimulacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22))))
         );
 
         pack();
@@ -252,7 +273,8 @@ public class Formulario extends javax.swing.JFrame {
         }
         Proceso.ultimoId=0;
 //        System.out.println("-------------------------------------------------------");        
-        ejecucion();
+        imprimirColas();
+        btnEjecutar.setEnabled(true);
     }//GEN-LAST:event_btnSimulacionActionPerformed
 
     //BOTON PARA GUARDAR
@@ -306,12 +328,22 @@ public class Formulario extends javax.swing.JFrame {
         } catch (IOException ex) {        
             Logger.getLogger(Formulario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ejecucion();
+        imprimirColas();
+        btnEjecutar.setEnabled(true);
     }//GEN-LAST:event_btnnuevaActionPerformed
 
     private void btnSimulacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimulacionMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSimulacionMouseClicked
+
+    private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
+        //Comenzar ejecución
+        if(colaListos.isEmpty() && colaNuevos.isEmpty() && colaEjecutando.isEmpty() && colaBloqueados.isEmpty()){
+            JOptionPane.showMessageDialog(rootPane, "Todos los procesos han terminado.");
+            return;
+        }
+        ejecucion();
+    }//GEN-LAST:event_btnEjecutarActionPerformed
 
     private void exportar() {//procedimiento para guardar en un archivo de texto
         try {
@@ -397,7 +429,6 @@ public class Formulario extends javax.swing.JFrame {
         //Verificando si hay nuevos procesos 
         if (colaNuevos.isEmpty()) {
             System.out.println("No existen procesos nuevos");
-            return;
         }
 
         //Comienzo de la estructura de iteración      
@@ -488,6 +519,7 @@ public class Formulario extends javax.swing.JFrame {
         txtcola2.setText("");
         txtcola3.setText("");
         txtcola4.setText("");
+        txtHistorialEjecucion.setText("");
         //Limpiando las colas
         colaImpresion.clear();
         colaNuevos.clear();
@@ -498,6 +530,11 @@ public class Formulario extends javax.swing.JFrame {
     }
 
     public void imprimirColas() {
+        txtcola0.setText("");
+        txtcola1.setText("");
+        txtcola2.setText("");
+        txtcola3.setText("");
+        txtcola4.setText("");
         //Imprimiendo la cola de nuevos
 //        System.out.println("");
 //        System.out.println("PROCESOS NUEVOS");
@@ -572,6 +609,7 @@ public class Formulario extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEjecutar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSimulacion;
     private javax.swing.JButton btnnueva;
