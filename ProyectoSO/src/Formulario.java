@@ -3,28 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.PriorityQueue;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *
  * @author Lito Soler Kelly Aguilar María Ramírez Orlando Durán Mario Gómez
  */
 public class Formulario extends javax.swing.JFrame {
-
+    
     //Colas de prioridad (5 TDA's) para los 5 estados del Modelo
     static PriorityQueue<Proceso> colaNuevos = new PriorityQueue<>();//Nuevos
     static PriorityQueue<Proceso> colaEjecutando = new PriorityQueue<>();//Ejecutando
@@ -38,7 +34,8 @@ public class Formulario extends javax.swing.JFrame {
      */
     public Formulario() {
         initComponents();
-
+        //this.setExtendedState(MAXIMIZED_BOTH);
+        getContentPane().setBackground(Color.WHITE);  
     }
 
     /**
@@ -65,39 +62,61 @@ public class Formulario extends javax.swing.JFrame {
         btnSimulacion = new javax.swing.JButton();
         btnnueva = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        txtHistorialEjecucion = new javax.swing.JTextArea();
+        lblHistorial = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        verOrdenEjecucion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Simulador de Procesos");
+        setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
+        setSize(new java.awt.Dimension(1000, 1000));
 
-        lblCantidad.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblCantidad.setText("Cantidad de Ciclos:");
+        lblCantidad.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblCantidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ciclos.png"))); // NOI18N
 
-        txtcola0.setColumns(20);
+        txtcantidad.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        txtcola0.setEditable(false);
+        txtcola0.setColumns(10);
+        txtcola0.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         txtcola0.setRows(5);
+        txtcola0.setBorder(null);
         jScrollPane1.setViewportView(txtcola0);
 
-        txtcola1.setColumns(20);
+        txtcola1.setEditable(false);
+        txtcola1.setColumns(10);
+        txtcola1.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         txtcola1.setRows(5);
+        txtcola1.setBorder(null);
         jScrollPane2.setViewportView(txtcola1);
 
-        txtcola2.setColumns(20);
+        txtcola2.setEditable(false);
+        txtcola2.setColumns(10);
+        txtcola2.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         txtcola2.setRows(5);
+        txtcola2.setBorder(null);
         jScrollPane3.setViewportView(txtcola2);
 
-        txtcola3.setColumns(20);
+        txtcola3.setEditable(false);
+        txtcola3.setColumns(10);
+        txtcola3.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         txtcola3.setRows(5);
+        txtcola3.setBorder(null);
         jScrollPane4.setViewportView(txtcola3);
 
-        txtcola4.setColumns(20);
+        txtcola4.setEditable(false);
+        txtcola4.setColumns(10);
+        txtcola4.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         txtcola4.setRows(5);
         jScrollPane5.setViewportView(txtcola4);
 
-        btnSimulacion.setText("Simulacion Aleatoria");
+        btnSimulacion.setBackground(new java.awt.Color(0, 153, 255));
+        btnSimulacion.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnSimulacion.setForeground(new java.awt.Color(255, 255, 255));
+        btnSimulacion.setText("Simulación Aleatoria");
+        btnSimulacion.setBorder(null);
         btnSimulacion.setName("btnSimulacionAlea"); // NOI18N
         btnSimulacion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -110,7 +129,11 @@ public class Formulario extends javax.swing.JFrame {
             }
         });
 
-        btnnueva.setText("Cargar Simulacion  ");
+        btnnueva.setBackground(new java.awt.Color(0, 153, 255));
+        btnnueva.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnnueva.setForeground(new java.awt.Color(255, 255, 255));
+        btnnueva.setText("Cargar Simulación  ");
+        btnnueva.setBorder(null);
         btnnueva.setName("btnCargarSimulacion"); // NOI18N
         btnnueva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,7 +141,11 @@ public class Formulario extends javax.swing.JFrame {
             }
         });
 
-        btnGuardar.setText("Guardar Simulacion");
+        btnGuardar.setBackground(new java.awt.Color(102, 204, 255));
+        btnGuardar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setText("Guardar Simulación");
+        btnGuardar.setBorder(null);
         btnGuardar.setName("btnGuardarSimulacion"); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,100 +153,81 @@ public class Formulario extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("NUEVOS PROCESOS");
+        txtHistorialEjecucion.setEditable(false);
+        txtHistorialEjecucion.setColumns(10);
+        txtHistorialEjecucion.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        txtHistorialEjecucion.setRows(5);
+        txtHistorialEjecucion.setBorder(null);
+        txtHistorialEjecucion.setName("txtHistorialEjecucion"); // NOI18N
+        jScrollPane6.setViewportView(txtHistorialEjecucion);
 
-        jLabel2.setText("PROCESOS LISTOS");
+        lblHistorial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/estados.png"))); // NOI18N
 
-        jLabel3.setText("PROCESOS EJECUTANDO");
-
-        jLabel4.setText("PROCESOS BLOQUEADOS");
-
-        jLabel5.setText("PROCESOS FINALIZADOS");
-
-        verOrdenEjecucion.setText("Ver Orden de Ejecución");
-        verOrdenEjecucion.setName("btnGuardarSimulacion"); // NOI18N
-        verOrdenEjecucion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                verOrdenEjecucionActionPerformed(evt);
-            }
-        });
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/historial.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(btnSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(verOrdenEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(158, 158, 158))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblCantidad)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtcantidad)
+                    .addComponent(jScrollPane6))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblHistorial)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel1)
-                                        .addGap(58, 58, 58)
-                                        .addComponent(jLabel2)))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 8, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblCantidad)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane5)
-                    .addComponent(jScrollPane4)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
-                        .addComponent(verOrdenEjecucion, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
-                    .addComponent(btnSimulacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnnueva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCantidad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblHistorial)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         pack();
@@ -294,21 +302,16 @@ public class Formulario extends javax.swing.JFrame {
                     }
                 }
             }
-            imprimirColas();
+            
         } catch (IOException ex) {        
             Logger.getLogger(Formulario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        ejecucion();
     }//GEN-LAST:event_btnnuevaActionPerformed
 
     private void btnSimulacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimulacionMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSimulacionMouseClicked
-
-    private void verOrdenEjecucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verOrdenEjecucionActionPerformed
-        OrdenEjecucion ventana= new OrdenEjecucion();
-        ventana.setVisible(true);
-    }//GEN-LAST:event_verOrdenEjecucionActionPerformed
 
     private void exportar() {//procedimiento para guardar en un archivo de texto
         try {
@@ -368,12 +371,13 @@ public class Formulario extends javax.swing.JFrame {
             if (archivo.exists()) {
                 try (FileWriter guardado = new FileWriter(archivo)) {
                     guardado.write(traza);
-                    JOptionPane.showMessageDialog(rootPane, "El orden de ejecucion fue guardado con exito");
+                    //JOptionPane.showMessageDialog(rootPane, "El orden de ejecucion fue guardado con exito");
                 }
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
+       txtHistorialEjecucion.setText(traza);
     }
 
     public boolean verificarCantCiclos() {
@@ -382,7 +386,7 @@ public class Formulario extends javax.swing.JFrame {
                 return true;
             }
         }catch(NumberFormatException e){
-            
+            JOptionPane.showMessageDialog(this, "Debe ingresar la cantidad de ciclos");
         }        
         return false;
     }
@@ -572,23 +576,21 @@ public class Formulario extends javax.swing.JFrame {
     private javax.swing.JButton btnSimulacion;
     private javax.swing.JButton btnnueva;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JLabel lblCantidad;
+    private javax.swing.JLabel lblHistorial;
+    private javax.swing.JTextArea txtHistorialEjecucion;
     private javax.swing.JTextField txtcantidad;
     private static javax.swing.JTextArea txtcola0;
     private static javax.swing.JTextArea txtcola1;
     private static javax.swing.JTextArea txtcola2;
     private static javax.swing.JTextArea txtcola3;
     private static javax.swing.JTextArea txtcola4;
-    private javax.swing.JButton verOrdenEjecucion;
     // End of variables declaration//GEN-END:variables
 
 }
