@@ -47,8 +47,6 @@ public class Formulario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblCantidad = new javax.swing.JLabel();
-        txtcantidad = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtcola0 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -62,22 +60,20 @@ public class Formulario extends javax.swing.JFrame {
         btnSimulacion = new javax.swing.JButton();
         btnnueva = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        lblHistorial = new javax.swing.JLabel();
+        btnEjecutar = new javax.swing.JButton();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
+        lblCantidad = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         txtHistorialEjecucion = new javax.swing.JTextArea();
-        lblHistorial = new javax.swing.JLabel();
+        txtcantidad = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        btnEjecutar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simulador de Procesos");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
         setSize(new java.awt.Dimension(1000, 1000));
-
-        lblCantidad.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblCantidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ciclos.png"))); // NOI18N
-
-        txtcantidad.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         txtcola0.setEditable(false);
         txtcola0.setColumns(10);
@@ -136,7 +132,6 @@ public class Formulario extends javax.swing.JFrame {
         btnnueva.setForeground(new java.awt.Color(255, 255, 255));
         btnnueva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open.png"))); // NOI18N
         btnnueva.setToolTipText("Cargar procesos");
-        btnnueva.setActionCommand("");
         btnnueva.setBorder(null);
         btnnueva.setName("btnCargarSimulacion"); // NOI18N
         btnnueva.addActionListener(new java.awt.event.ActionListener() {
@@ -158,17 +153,7 @@ public class Formulario extends javax.swing.JFrame {
             }
         });
 
-        txtHistorialEjecucion.setEditable(false);
-        txtHistorialEjecucion.setColumns(10);
-        txtHistorialEjecucion.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        txtHistorialEjecucion.setRows(5);
-        txtHistorialEjecucion.setBorder(null);
-        txtHistorialEjecucion.setName("txtHistorialEjecucion"); // NOI18N
-        jScrollPane6.setViewportView(txtHistorialEjecucion);
-
         lblHistorial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/estados.png"))); // NOI18N
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/historial.png"))); // NOI18N
 
         btnEjecutar.setBackground(new java.awt.Color(153, 204, 255));
         btnEjecutar.setForeground(new java.awt.Color(255, 255, 255));
@@ -182,58 +167,93 @@ public class Formulario extends javax.swing.JFrame {
             }
         });
 
+        jDesktopPane1.setBackground(new java.awt.Color(226, 226, 226));
+
+        lblCantidad.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblCantidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ciclos.png"))); // NOI18N
+
+        txtHistorialEjecucion.setEditable(false);
+        txtHistorialEjecucion.setColumns(10);
+        txtHistorialEjecucion.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        txtHistorialEjecucion.setRows(5);
+        txtHistorialEjecucion.setBorder(null);
+        txtHistorialEjecucion.setName("txtHistorialEjecucion"); // NOI18N
+        jScrollPane6.setViewportView(txtHistorialEjecucion);
+
+        txtcantidad.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/historial.png"))); // NOI18N
+
+        jDesktopPane1.setLayer(lblCantidad, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jScrollPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(txtcantidad, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblCantidad)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtcantidad)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCantidad)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblCantidad)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtcantidad)
-                    .addComponent(jScrollPane6))
+                .addContainerGap()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblHistorial)
-                        .addGap(0, 8, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(btnSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblHistorial, javax.swing.GroupLayout.Alignment.TRAILING)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblCantidad)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 12, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblHistorial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -242,13 +262,14 @@ public class Formulario extends javax.swing.JFrame {
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnSimulacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22))))
+                            .addComponent(btnnueva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jDesktopPane1))
+                .addContainerGap())
         );
 
         pack();
@@ -256,11 +277,7 @@ public class Formulario extends javax.swing.JFrame {
 
     //BOTON QUE SIMULA ALEATORIAMENTE
     private void btnSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulacionActionPerformed
-       //Verificando si el usuario ingresó los ciclos
-        if (!verificarCantCiclos()) {
-            return;
-        }
-        //Limpiando colas
+       //Limpiando colas
         limpiarColas();
         //Generando procesos nuevos aleatorios 
 //        System.out.println("-------------------PROCESOS A SIMULAR-----------------");
@@ -285,16 +302,9 @@ public class Formulario extends javax.swing.JFrame {
     private void btnnuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnuevaActionPerformed
         try {
             PriorityQueue<Proceso> todosProcesos;
-            //Verificando si el usuario ingresó los ciclos
-            if (!verificarCantCiclos()) {
-                return;
-            }
-            
             //Limpiando colas
-            limpiarColas();  //Este código solo debe ejecutarse una vez, para limpiar las colas antes de leer el archivo
-            
-            todosProcesos = obtenerProcesos("./procesos.txt");
-            
+            limpiarColas();  //Este código solo debe ejecutarse una vez, para limpiar las colas antes de leer el archivo            
+            todosProcesos = obtenerProcesos("./procesos.txt");            
             while(! todosProcesos.isEmpty()){
                 Proceso proceso = todosProcesos.remove();
                 //Verificando si el proceso es válido, si no es válido es desechado
@@ -337,6 +347,10 @@ public class Formulario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSimulacionMouseClicked
 
     private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
+        //Verificando si el usuario ingresó los ciclos
+        if (!verificarCantCiclos()) {
+            return;
+        }
         //Comenzar ejecución
         if(colaListos.isEmpty() && colaNuevos.isEmpty() && colaEjecutando.isEmpty() && colaBloqueados.isEmpty()){
             JOptionPane.showMessageDialog(rootPane, "Todos los procesos han terminado.");
@@ -613,6 +627,7 @@ public class Formulario extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSimulacion;
     private javax.swing.JButton btnnueva;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
