@@ -222,7 +222,7 @@ public class Proceso implements Comparable<Proceso>{//Implementa Comparable para
         } else if (this.getPrioridad() < proceso.getPrioridad()) {
             return -1;
         } 
-        return Integer.compare(this.getCantInstEjecutadas(), proceso.getCantInstEjecutadas());
+        return Integer.compare(this.getID(), 0);
     }
     
 }

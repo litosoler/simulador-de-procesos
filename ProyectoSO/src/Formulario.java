@@ -17,11 +17,13 @@ import javax.swing.*;
 
 /**
  *
- * @author Lito Soler Kelly Aguilar María Ramírez Orlando Durán Mario Gómez
+ * @author Lito Soler, Kelly Aguilar, María Ramírez, Orlando Durán, Mario Gómez
  */
 public class Formulario extends javax.swing.JFrame {
-    
+    //Variable utilizada para guardar los procesos que no están siendo simulados al final de la simulación y poder guardarlos
+    static String procesosNoSimulados=""; 
     //Colas de prioridad (5 TDA's) para los 5 estados del Modelo
+    static PriorityQueue<Proceso> todosProcesos = new PriorityQueue<>();//Todos los procesos que fueron leídos o creados serán almacenados en esta cola
     static PriorityQueue<Proceso> colaNuevos = new PriorityQueue<>();//Nuevos
     static PriorityQueue<Proceso> colaEjecutando = new PriorityQueue<>();//Ejecutando
     static PriorityQueue<Proceso> colaListos = new PriorityQueue<>();//Listos
@@ -280,16 +282,17 @@ public class Formulario extends javax.swing.JFrame {
        //Limpiando colas
         limpiarColas();
         //Generando procesos nuevos aleatorios 
-//        System.out.println("-------------------PROCESOS A SIMULAR-----------------");
         for (int i = 0; i < 20; i++) {
             Proceso proceso = new Proceso();
             proceso.crearAleatorioBCP();
-            proceso.validarProceso();
-            colaNuevos.add(proceso);
-//            System.out.println(proceso + "      " + proceso.getMensaje());
+            proceso.validarProceso();            
+            if(i<10){
+                colaNuevos.add(proceso);
+            }else{
+               todosProcesos.add(proceso); 
+            }
         }
-        Proceso.ultimoId=0;
-//        System.out.println("-------------------------------------------------------");        
+        Proceso.ultimoId=0;    
         imprimirColas();
         btnEjecutar.setEnabled(true);
     }//GEN-LAST:event_btnSimulacionActionPerformed
@@ -300,12 +303,14 @@ public class Formulario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnnuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnuevaActionPerformed
-        try {
-            PriorityQueue<Proceso> todosProcesos;
+        try {            
             //Limpiando colas
             limpiarColas();  //Este código solo debe ejecutarse una vez, para limpiar las colas antes de leer el archivo            
-            todosProcesos = obtenerProcesos("./procesos.txt");            
-            while(! todosProcesos.isEmpty()){
+            obtenerProcesos("./procesos.txt");            
+            while(!todosProcesos.isEmpty()) {  
+                if((colaNuevos.size() + colaListos.size() + colaEjecutando.size() + colaBloqueados.size())>9){
+                    break;
+                }
                 Proceso proceso = todosProcesos.remove();
                 //Verificando si el proceso es válido, si no es válido es desechado
                 if(proceso.getValidez()){
@@ -367,7 +372,7 @@ public class Formulario extends javax.swing.JFrame {
             File archivo = new File(ruta);
             if (archivo.exists()) {
                 try (FileWriter guardado = new FileWriter(archivo)) {
-                    guardado.write(txtcola0.getText() + txtcola1.getText() + txtcola2.getText() + txtcola3.getText() + txtcola4.getText());//guarda todas las colas en el archivo de texto
+                    guardado.write(txtcola0.getText() + txtcola1.getText() + txtcola2.getText() + txtcola3.getText() + txtcola4.getText() + procesosNoSimulados);//guarda todas las colas en el archivo de texto
                     JOptionPane.showMessageDialog(rootPane, "El archivo fue guardado con éxito");
                 }
             }
@@ -376,7 +381,7 @@ public class Formulario extends javax.swing.JFrame {
         }
     }
     
-   private PriorityQueue<Proceso> obtenerProcesos(String archivo) throws FileNotFoundException, IOException {
+   private void obtenerProcesos(String archivo) throws FileNotFoundException, IOException {
       String cadena;
       String acumulador = "";
       FileReader f = new FileReader(archivo);
@@ -385,11 +390,10 @@ public class Formulario extends javax.swing.JFrame {
           acumulador += cadena;
       }
       b.close();
-      return crearProcesos(acumulador);
+      crearProcesos(acumulador);
     }   
     
-    public PriorityQueue<Proceso> crearProcesos(String cadena) {
-        PriorityQueue<Proceso> todosProcesos = new PriorityQueue<>();
+    public void crearProcesos(String cadena) {
         String[] procesos = cadena.split(";");
         for(int i = 0; i <procesos.length; i++){
             String proceso = procesos[i];
@@ -406,7 +410,6 @@ public class Formulario extends javax.swing.JFrame {
             procesoCreado.validarProceso();
             todosProcesos.add(procesoCreado);  
         }
-        return todosProcesos;
     }
     
     private void guardarOrdenEjecucionProcesos(String traza){
@@ -417,7 +420,6 @@ public class Formulario extends javax.swing.JFrame {
             if (archivo.exists()) {
                 try (FileWriter guardado = new FileWriter(archivo)) {
                     guardado.write(traza);
-                    //JOptionPane.showMessageDialog(rootPane, "El orden de ejecucion fue guardado con exito");
                 }
             }
         } catch (IOException ex) {
@@ -440,28 +442,44 @@ public class Formulario extends javax.swing.JFrame {
     public void ejecucion() {
         Integer cantidadCiclos = Integer.parseInt(txtcantidad.getText()); //Aquí se debe almacenar la cantidad de ciclos que el usuario ingresa 
         String traza = "";
-        //Verificando si hay nuevos procesos 
-        if (colaNuevos.isEmpty()) {
-            System.out.println("No existen procesos nuevos");
-        }
-
+        
         //Comienzo de la estructura de iteración      
-        for (int ciclos = 0; ciclos < cantidadCiclos; ciclos++) {           
-            //En caso de haber procesos nuevos se verica la cantidad de procesos en las lista listos, bloqueados, ejecutando 
-            //si la cant es menor de 10 se agrega un nuevo procesos a la lista de listos hasta que se alcancen los 10
-            while (!colaNuevos.isEmpty()) {
-               
-                if ((colaListos.size() + colaEjecutando.size() + colaBloqueados.size()) < 10) {
-                    colaNuevos.element().setEstado(1);
-                    Proceso proceso = colaNuevos.remove();
-                    colaListos.add(proceso);
+        for (int ciclos = 0; ciclos < cantidadCiclos; ciclos++) {   
+            //Verificando si se están simulando menos de 10 procesos, en ese caso, se añaden más procesos
+            while(!todosProcesos.isEmpty()){
+                 if ((colaNuevos.size() + colaListos.size() + colaEjecutando.size() + colaBloqueados.size()) < 10) {
+                    switch(todosProcesos.element().getEstado()){
+                        //Añadiendo a nuevos
+                        case 0:
+                            colaNuevos.add(todosProcesos.remove());
+                            break;
+                            //Añadiendo a listos
+                        case 1:
+                            colaListos.add(todosProcesos.remove());
+                            break;
+                            //Añadiendo a Ejecutando
+                        case 2:
+                            colaEjecutando.add(todosProcesos.remove());
+                            break;
+                            //Añadiendo a Bloqueados
+                        case 3:
+                            colaBloqueados.add(todosProcesos.remove());
+                            break;
+                            //Añadiendo a terminados
+                        case 4:
+                            colaTerminados.add(todosProcesos.remove());
+                            break;
+                    }
                 } else {
                     break;
-                }
-                
-                
+                } 
             }
-
+            
+            if(!colaNuevos.isEmpty()){
+                colaNuevos.element().setEstado(1);
+                colaListos.add(colaNuevos.remove());
+            }
+            
             //Verificando si hay procesos en la cola de listos. Si la cola ejecutando está vacía, encola un proceso listo para ejecutarse.
             if (!colaListos.isEmpty()) {
                 if (colaEjecutando.isEmpty()) {
@@ -479,6 +497,7 @@ public class Formulario extends javax.swing.JFrame {
                     colaEjecutando.element().aumentarCiclosEjecu();//Se lleva un conteo de cuántos ciclos seguidos se ha ejecutado el proceso.
                     //Verificando si NO se ha llegado a la instrucción de bloqueo
                     if (colaEjecutando.element().getIntrucBloqueo() != colaEjecutando.element().getCantInstEjecutadas()) {
+                        
                         //Verificando si el proceso se ejecutó durante 3 segmentos seguidos 
                         if (colaEjecutando.element().getCiclosEjecutando() == 3) {
                             //Si se ha ejecutado el proceso durante 3 segmentos seguidos, se comprueba que su prioridad pueda ser degradada
@@ -489,6 +508,11 @@ public class Formulario extends javax.swing.JFrame {
                             colaEjecutando.element().setEstado(1);
                             colaEjecutando.element().limpiarCiclosEjecu();
                             colaListos.add(colaEjecutando.remove());
+                        }
+                        //Verificando el temporizador del procesador
+                        else if(ciclos%5 == 0){
+                           colaEjecutando.element().setEstado(1);
+                           colaListos.add(colaEjecutando.remove()); 
                         }
                     } else {//Si la instrucción de bloqueo es igual a la cantidad de instrucciones ejecutadas, se procede a bloquear el proceso
                         colaEjecutando.element().setEstado(3);
@@ -535,6 +559,7 @@ public class Formulario extends javax.swing.JFrame {
         txtcola4.setText("");
         txtHistorialEjecucion.setText("");
         //Limpiando las colas
+        todosProcesos.clear();
         colaImpresion.clear();
         colaNuevos.clear();
         colaListos.clear();
@@ -549,59 +574,51 @@ public class Formulario extends javax.swing.JFrame {
         txtcola2.setText("");
         txtcola3.setText("");
         txtcola4.setText("");
+        procesosNoSimulados = "";
         //Imprimiendo la cola de nuevos
-//        System.out.println("");
-//        System.out.println("PROCESOS NUEVOS");
         colaImpresion.addAll(colaNuevos);
         while (!colaImpresion.isEmpty()) {
             Proceso proceso = colaImpresion.remove();//procesos nuevos
-//            System.out.println(proceso);
             //Imprime en el textBox correspondiente todos los procesos nuevos
             txtcola0.append(String.valueOf(proceso) + "\n");
         }
 
         //Imprimiendo la cola de listos
-//        System.out.println("");
-//        System.out.println("PROCESOS LISTOS");
         colaImpresion.addAll(colaListos);
         while (!colaImpresion.isEmpty()) {
             Proceso proceso = colaImpresion.remove();
-//            System.out.println(proceso);
             //Imprime en el textBox correspondiente todos los procesos listos
             txtcola1.append(String.valueOf(proceso) + "\n");
         }
 
         //Imprimiendo la cola de ejecutando
-//        System.out.println("");
-//        System.out.println("PROCESOS EJECUTANDO");
         colaImpresion.addAll(colaEjecutando);
         while (!colaImpresion.isEmpty()) {
             Proceso proceso = colaImpresion.remove();
-//            System.out.println(proceso);
             //Imprime en el textBox correspondiente todos los procesos ejecutando
             txtcola2.append(String.valueOf(proceso) + "\n");
         }
 
         //Imprimiendo la cola de bloqueados
-//        System.out.println("");
-//        System.out.println("PROCESOS BLOQUEADOS");
         colaImpresion.addAll(colaBloqueados);
         while (!colaImpresion.isEmpty()) {
             Proceso proceso = colaImpresion.remove();
-//            System.out.println(proceso);
             //Imprime en el textBox correspondiente todos los procesos bloqueados
             txtcola3.append(String.valueOf(proceso) + "\n");
         }
 
         //Imprimiendo la cola de terminados
-//        System.out.println("");
-//        System.out.println("PROCESOS TERMINADOS");
         colaImpresion.addAll(colaTerminados);
         while (!colaImpresion.isEmpty()) {
             Proceso proceso = colaImpresion.remove();
-//            System.out.println(proceso);
             //Imprime en el textBox correspondiente todos los procesos terminados
             txtcola4.append(String.valueOf(proceso) + "\n");
+        }
+        
+        //Imprimiendo la cola de terminados        
+        colaImpresion.addAll(todosProcesos);
+        while (!colaImpresion.isEmpty()) {
+            procesosNoSimulados += colaImpresion.remove();
         }
 
     }
