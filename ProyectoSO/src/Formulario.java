@@ -493,6 +493,7 @@ public class Formulario extends javax.swing.JFrame {
                 //Verificando si la cantidad de instrucciones ejecutadas es distinta a la cantidad de instrucciones del proceso
                 if (colaEjecutando.element().getCantInstEjecutadas() != colaEjecutando.element().getCatidadInstruc()) {
                     colaEjecutando.element().AumCantInstEjecutadas();
+                    colaEjecutando.element().aumentarReloj();
                     traza = traza +  colaEjecutando.element().toString() + "\n";
                     colaEjecutando.element().aumentarCiclosEjecu();//Se lleva un conteo de cuántos ciclos seguidos se ha ejecutado el proceso.
                     //Verificando si NO se ha llegado a la instrucción de bloqueo
