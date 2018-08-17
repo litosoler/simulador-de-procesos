@@ -1,5 +1,4 @@
 
-import static java.lang.Integer.compare;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,7 +9,7 @@ import java.util.Random;
  *          Orlando Durán
  *          Mario Gómez
  */
-public class Proceso implements Comparable<Proceso>{//Implementa Comparable para poder sobreescribir el método compareTo() y usarlo en las colas de prioridad
+public class Proceso{//Implementa Comparable para poder sobreescribir el método compareTo() y usarlo en las colas de prioridad
     private int id = 0;//Id de proceso
     private int estado = 0;//El estado del proceso 0-Nuevo  1-Listo 2-Ejecutando 3-Bloqueado 4-Terminado
     private int prioridad = 0; //
@@ -22,7 +21,6 @@ public class Proceso implements Comparable<Proceso>{//Implementa Comparable para
     private String mensaje; //Mensaje de validación de procesos.
     private boolean validez = true; //Booleano para catalogar un proceso como válido o no
     private int ciclosEjecutando=0; //Cantidad de ciclos consecutivos que se ejecuta un proceso
-    private int reloj=0; //Variable que se utiliza para ir almacenando todos los ciclos que va ejecutando un proceso
     static int ultimoId = 0; //Utilizado en la generación random de procesos, para evitar repitencia de Id de procesos
     static Random aleatorio = new Random();//Random para generar los procesos aleatorios
     static List<Integer> idProcesos = new ArrayList<Integer>();//En esta lista se almacenan todos los id's de los procesos que se van creando
@@ -109,15 +107,6 @@ public class Proceso implements Comparable<Proceso>{//Implementa Comparable para
     //Aumentar la cantidad de segmentos de ejecución consecutivos
     public void aumentarCiclosEjecu() {
         this.ciclosEjecutando++;
-    }
-    
-    public int getReloj() {
-        return reloj;
-    }
-    
-    //Aumentar la cantidad de segmentos de ejecución consecutivos
-    public void aumentarReloj() {
-        this.reloj++;
     }
     
     //Reiniciar la cantidad de segmentos de ejecución consecutivos
@@ -224,17 +213,5 @@ public class Proceso implements Comparable<Proceso>{//Implementa Comparable para
     public String toString() {        
         return String.format("%04d", id) + "/" + estado + "/" + prioridad + "/" + String.format("%03d", catidadInstruc)+ "/" + String.format("%03d", intrucBloqueo) + "/" + tipoEvento + ";";
     } 
-    
-     //Método para sobre-escribir la función compare() de la librería Comparator y que ordene por prioridad en las colas
-    @Override
-    public int compareTo(Proceso proceso) {
-        if(this.getPrioridad()> proceso.getPrioridad()) {
-            return 1;
-        } else if (this.getPrioridad() < proceso.getPrioridad()) {
-            return -1;
-        } else{
-            return compare(this.getReloj(),proceso.getReloj());
-        }        
-    }
-    
+      
 }
