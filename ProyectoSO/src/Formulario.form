@@ -51,7 +51,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="btnSimulacion" min="-2" pref="67" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnnueva" min="-2" pref="67" max="-2" attributes="0"/>
+                          <Component id="btnAbrirArchivo" min="-2" pref="67" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnGuardar" min="-2" pref="67" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -84,7 +84,7 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnSimulacion" max="32767" attributes="0"/>
                           <Component id="btnEjecutar" alignment="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="btnnueva" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnAbrirArchivo" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnGuardar" alignment="0" min="-2" pref="63" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -243,7 +243,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimulacionActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnnueva">
+    <Component class="javax.swing.JButton" name="btnAbrirArchivo">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="0" type="rgb"/>
@@ -264,7 +264,7 @@
         <Property name="name" type="java.lang.String" value="btnCargarSimulacion" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnnuevaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAbrirArchivoActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnGuardar">

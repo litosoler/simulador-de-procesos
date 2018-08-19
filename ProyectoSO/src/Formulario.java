@@ -51,7 +51,7 @@ public class Formulario extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         txtcola4 = new javax.swing.JTextArea();
         btnSimulacion = new javax.swing.JButton();
-        btnnueva = new javax.swing.JButton();
+        btnAbrirArchivo = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         lblHistorial = new javax.swing.JLabel();
         btnEjecutar = new javax.swing.JButton();
@@ -120,16 +120,16 @@ public class Formulario extends javax.swing.JFrame {
             }
         });
 
-        btnnueva.setBackground(new java.awt.Color(0, 153, 255));
-        btnnueva.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnnueva.setForeground(new java.awt.Color(255, 255, 255));
-        btnnueva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open.png"))); // NOI18N
-        btnnueva.setToolTipText("Cargar procesos");
-        btnnueva.setBorder(null);
-        btnnueva.setName("btnCargarSimulacion"); // NOI18N
-        btnnueva.addActionListener(new java.awt.event.ActionListener() {
+        btnAbrirArchivo.setBackground(new java.awt.Color(0, 153, 255));
+        btnAbrirArchivo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnAbrirArchivo.setForeground(new java.awt.Color(255, 255, 255));
+        btnAbrirArchivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open.png"))); // NOI18N
+        btnAbrirArchivo.setToolTipText("Cargar procesos");
+        btnAbrirArchivo.setBorder(null);
+        btnAbrirArchivo.setName("btnCargarSimulacion"); // NOI18N
+        btnAbrirArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnnuevaActionPerformed(evt);
+                btnAbrirArchivoActionPerformed(evt);
             }
         });
 
@@ -232,7 +232,7 @@ public class Formulario extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(btnSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnnueva, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAbrirArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -259,7 +259,7 @@ public class Formulario extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnSimulacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(btnnueva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAbrirArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jDesktopPane1))
                 .addContainerGap())
@@ -300,7 +300,7 @@ public class Formulario extends javax.swing.JFrame {
         exportar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnnuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnuevaActionPerformed
+    private void btnAbrirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirArchivoActionPerformed
         try {            
             //Limpiando listas
             limpiarListas();  //Este código solo debe ejecutarse una vez, para limpiar las listas antes de leer el archivo            
@@ -346,7 +346,7 @@ public class Formulario extends javax.swing.JFrame {
         ordenarListas();
         imprimirColas();
         btnEjecutar.setEnabled(true);
-    }//GEN-LAST:event_btnnuevaActionPerformed
+    }//GEN-LAST:event_btnAbrirArchivoActionPerformed
 
     private void btnSimulacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimulacionMouseClicked
         // TODO add your handling code here:
@@ -382,24 +382,28 @@ public class Formulario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
-    
+   
+   //obtiene todos los procesos guardados en un archivo y lo guarda en una String
    private void obtenerProcesos(String archivo) throws FileNotFoundException, IOException {
       String cadena;
       String acumulador = "";
-      FileReader f = new FileReader(archivo);
-      BufferedReader b = new BufferedReader(f);
+      FileReader f = new FileReader(archivo);//abre un archivo para su lectura
+      BufferedReader b = new BufferedReader(f); //lee el archivo
+      //obtiene fila a fila el archivo y lo guarda en un string
       while((cadena = b.readLine())!=null) {
           acumulador += cadena;
       }
       b.close();
       crearProcesos(acumulador);
     }   
-    
+    //recibe una String con todos los procesos guardados en un archivo, lo formatea
+   // y crea un objeto para cada proceso para poder rellenar las listas.
     public void crearProcesos(String cadena) {
-        String[] procesos = cadena.split(";");
+        String[] procesos = cadena.split(";");//crea un array de string de procesos
+        //para cada indixe indexa la cadena y crea el proceso objeto
         for(int i = 0; i <procesos.length; i++){
             String proceso = procesos[i];
-            String[] partesProceso = proceso.split("/");
+            String[] partesProceso = proceso.split("/");//crea un array con cada parte de un proceso
             int id = Integer.parseInt(partesProceso[0]);
             int estado = Integer.parseInt(partesProceso[1]);
             int prioridad = Integer.parseInt(partesProceso[2]);
@@ -415,12 +419,12 @@ public class Formulario extends javax.swing.JFrame {
             }            
         }
     }
-    
+    //guarda el orden de ejecucion de los procesos simulados
     private void guardarOrdenEjecucionProcesos(String traza){
        try {
-            String ruta = "./ordenEjecucion.txt";
+            String ruta = "./ordenEjecucion.txt";//la ruta donde se guardara
             File archivo = new File(ruta);
-           
+           //guarda la info si existe el archivo,  esto sobreescribe el archivo
             if (archivo.exists()) {
                 try (FileWriter guardado = new FileWriter(archivo)) {
                     guardado.write(traza);
@@ -429,9 +433,11 @@ public class Formulario extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
+       //muestra el historial de ejecucion en pantalla
        txtHistorialEjecucion.setText(traza);
     }
-
+    
+    //si el campo cantidad de ciclos esta vacio muestra un mensaje de error al tratar de empezar la simulacion
     public boolean verificarCantCiclos() {
         try{
             if (Integer.parseInt(txtcantidad.getText()) > 0) {
@@ -646,10 +652,10 @@ public class Formulario extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAbrirArchivo;
     private javax.swing.JButton btnEjecutar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSimulacion;
-    private javax.swing.JButton btnnueva;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
