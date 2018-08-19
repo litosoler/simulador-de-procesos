@@ -1,0 +1,12 @@
+AUTORES:
+-Lito Soler
+-Kelly Aguilar
+-María Ramírez
+-Orlando Durán
+-Mario Gómez
+
+En la carpeta EJECUTABLE, se encuentra el programa para su uso inmediato.
+
+Si lo que desea es ver el CÓDIGO FUENTE, verifique la carpeta llamada PROYECTOSO, en ella se encuentra el proyecto que puede cargar en NEATBEANS.
+
+Los MANUALES se encuentran en la carpeta de manuales

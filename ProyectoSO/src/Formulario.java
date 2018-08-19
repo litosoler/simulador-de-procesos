@@ -13,8 +13,11 @@ import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
- *
- * @author Lito Soler, Kelly Aguilar, María Ramírez, Orlando Durán, Mario Gómez
+ *@author Lito Soler
+ *@author Kelly Aguilar
+ *@author María Ramírez
+ *@author Orlando Durán
+ *@author Mario Gómez
  */
 public class Formulario extends javax.swing.JFrame {
     //Variable utilizada para guardar los procesos que no están siendo simulados al final de la simulación y poder guardarlos

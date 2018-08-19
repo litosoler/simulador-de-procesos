@@ -3,13 +3,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 /**
- *@authores Lito Soler
- *          Kelly Aguilar
- *          María Ramírez
- *          Orlando Durán
- *          Mario Gómez
+ *@author Lito Soler
+ *@author Kelly Aguilar
+ *@author María Ramírez
+ *@author Orlando Durán
+ *@author Mario Gómez
  */
-public class Proceso{//Implementa Comparable para poder sobreescribir el método compareTo() y usarlo en las colas de prioridad
+public class Proceso{
     private int id = 0;//Id de proceso
     private int estado = 0;//El estado del proceso 0-Nuevo  1-Listo 2-Ejecutando 3-Bloqueado 4-Terminado
     private int prioridad = 0; //
@@ -25,9 +25,12 @@ public class Proceso{//Implementa Comparable para poder sobreescribir el método
     static Random aleatorio = new Random();//Random para generar los procesos aleatorios
     static List<Integer> idProcesos = new ArrayList<Integer>();//En esta lista se almacenan todos los id's de los procesos que se van creando
     
-    public Proceso() {} //Constructor
+    public Proceso() {} /**
+     * Constructor*/
     
-    //Iniciar el bloque de control de proceso con los valores recibidos desde la lectura del archivo
+    /**
+     * Iniciar el bloque de control de proceso con los valores recibidos desde la lectura del archivo
+     */
     public void crearBCP(int id, int estado, int prioridad, int catidadInstruc, int intrucBloqueo, int tipoEvento){
         this.id = id;
         this.estado = estado;
@@ -35,7 +38,7 @@ public class Proceso{//Implementa Comparable para poder sobreescribir el método
         this.catidadInstruc = catidadInstruc;
         this.intrucBloqueo = intrucBloqueo;
         this.tipoEvento = tipoEvento;
-        switch(tipoEvento){//Dependiendo del tipo de instruccion de bloqueo, asigna el número de los ciclos que estará bloqueado el proceso 
+        switch(tipoEvento){/**Dependiendo del tipo de instruccion de bloqueo, asigna el número de los ciclos que estará bloqueado el proceso*/ 
             case 3:
                 this.ciclosBloqueo = 13;
                 break;
